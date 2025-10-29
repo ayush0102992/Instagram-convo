@@ -1,33 +1,10 @@
-""" Single-file Flask app with a simple HTML UI to upload Instagram cookie (sessionid), message file, thread id (or upload), speed file and a live console using Server-Sent Events (SSE).
-
-How it works (quick):
-
-Open '/' and upload files / provide thread id and press Start
-
-The app saves uploaded files to /tmp/ig_sender_uploads
-
-A background thread uses instagrapi.Client().login_by_sessionid(sessionid) and attempts to send the message to the provided thread uid repeatedly once per speed interval (or just once depending on choice). The sample below sends once to the provided thread id for each Start click.
-
-Live console shows recent log lines streamed from the server via EventSource (SSE).
-
-
-Dependencies: pip install flask instagrapi Pillow
-
-Warning / Legal:
-
-Only use with accounts / threads where you have permission to send messages.
-
-Do not use for spam or abusive behaviour. Keep your sessionid secure.
-
-
-Save this file and run: python flask_ig_cookie_sender_singlefile.py
-
-Open http://localhost:5000
-
-"""
-
-from flask import Flask, request, jsonify, Response, render_template_string, redirect, url_for import os import threading import time import json from werkzeug.utils import secure_filename from instagrapi import Client
-
+from flask import Flask, request, jsonify, Response, render_template_string, redirect, url_for
+import os
+import threading
+import time
+import json
+from werkzeug.utils import secure_filename
+from instagrapi import Client
 --- CONFIG ---
 
 UPLOAD_FOLDER = "/tmp/ig_sender_uploads" os.makedirs(UPLOAD_FOLDER, exist_ok=True) ALLOWED_TEXT = {"txt", "json", "cookie"} LOG_MAX_LINES = 500
