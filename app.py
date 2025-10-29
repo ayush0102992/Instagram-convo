@@ -139,7 +139,7 @@ def worker_send_to_thread(sessionid, thread_uid, message_text, interval_seconds)
             append_log(f"direct_send failed: {repr(e)} -- trying fallback message_send()")
             try:
                 # message_send signature may vary; try best-effort
-                client.message_send(message_text, thread_uid)
+                client.direct_thread_send(message, thread_ids=[thread_id])
                 append_log(f"Message sent to thread {thread_uid} using message_send().")
             except Exception as e2:
                 append_log(f"Both send attempts failed: {repr(e2)}")
